@@ -1,8 +1,8 @@
 package com.example.skolaback.model.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -13,7 +13,7 @@ public class Diploma {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Integer id;
+    private long id;
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;

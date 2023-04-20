@@ -1,8 +1,8 @@
 package com.example.skolaback.model.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +14,7 @@ public class Contest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Integer id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "school_id")

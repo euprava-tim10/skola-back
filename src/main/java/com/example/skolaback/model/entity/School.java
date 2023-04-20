@@ -1,9 +1,9 @@
 package com.example.skolaback.model.entity;
 
 import com.example.skolaback.model.enumerations.SchoolType;
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +13,7 @@ public class School {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Integer id;
+    private long id;
     @Column
     private String name;
     private String place;
