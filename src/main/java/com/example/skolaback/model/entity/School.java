@@ -19,6 +19,6 @@ public class School {
     private String place;
     @Enumerated(EnumType.STRING)
     private SchoolType type;
-    @OneToMany(mappedBy = "school", fetch = FetchType.EAGER)
-    private Set<Student> students = new HashSet<>();
+//    @OneToMany(mappedBy = "school", fetch = FetchType.EAGER)
+//    private Set<Student> students = new HashSet<>();
 }

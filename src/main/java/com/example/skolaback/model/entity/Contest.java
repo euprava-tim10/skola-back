@@ -20,12 +20,12 @@ public class Contest {
     @JoinColumn(name = "school_id")
     private School school;
 
-    @Column
-    private String course;
-    private Integer quota;
-    private LocalDate year;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<CourseQuota> quotas = new HashSet<>();
 
-    @OneToMany(mappedBy = "contest", fetch = FetchType.EAGER)
-    private Set<ContestApplication> applications = new HashSet<>();
+    @Column
+    private Integer primarySchoolQuota;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
 }

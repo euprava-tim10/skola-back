@@ -6,24 +6,16 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class ContestApplication {
+public class CourseQuota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "contest_id")
-    private Contest contest;
-
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
-
     @Column
-    private Double rangPoints;
+    private Integer quota;
 
     @ManyToOne
-    private Course firstWish;
+    private Course course;
 }

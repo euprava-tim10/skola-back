@@ -6,17 +6,16 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Administrator {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private long id;
+
     @Column
-    private String firstName;
-    private String lastName;
-    private String jmbg;
-    @OneToOne
-    @JoinColumn(name = "school_id")
+    private String name;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private School school;
 }

@@ -18,7 +18,6 @@ public class Student {
     @Column
     private String firstName;
     private String lastName;
-    private String password;
     private String jmbg;
     private String course;
     @ManyToOne

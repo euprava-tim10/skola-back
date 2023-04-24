@@ -4,8 +4,9 @@ import com.example.skolaback.model.enumerations.SchoolType;
 import lombok.*;
 
 
-@Data
-@Builder
+@Getter
+@Setter
+@NoArgsConstructor
 public class SchoolResponseDTO {
     private String name;
     private String place;
