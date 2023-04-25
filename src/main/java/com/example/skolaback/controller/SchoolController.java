@@ -2,6 +2,7 @@ package com.example.skolaback.controller;
 
 import com.example.skolaback.model.dto.contest.ContestResponseDTO;
 import com.example.skolaback.model.dto.course.CourseResponseDTO;
+import com.example.skolaback.model.dto.school.SchoolResponseDTO;
 import com.example.skolaback.model.entity.Contest;
 import com.example.skolaback.model.mapper.ExtendedModelMapper;
 import com.example.skolaback.security.permission.IsAdmin;
@@ -23,6 +24,11 @@ public class SchoolController {
         this.schoolService = schoolService;
         this.contestService = contestService;
         this.modelMapper = modelMapper;
+    }
+
+    @GetMapping("/{id}")
+    public SchoolResponseDTO getSchool(@PathVariable long id) {
+        return modelMapper.map(schoolService.getById(id), SchoolResponseDTO.class);
     }
 
 
