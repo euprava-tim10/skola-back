@@ -16,7 +16,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class ContestResponseDTO {
-
+    private long id;
     private SchoolResponseDTO school;
     private Set<CourseQuotaResponseDTO> quotas;
     private Integer primarySchoolQuota;

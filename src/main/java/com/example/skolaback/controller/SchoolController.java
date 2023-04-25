@@ -28,7 +28,7 @@ public class SchoolController {
 
     @PostMapping("/{id}/konkursi")
     @IsAdmin
-    public long createContest(@PathVariable long id, @RequestBody Contest contest) {
+    public ContestResponseDTO createContest(@PathVariable long id, @RequestBody Contest contest) {
         return contestService.createContest(id, contest);
     }
 
