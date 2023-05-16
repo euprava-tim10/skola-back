@@ -25,6 +25,7 @@ public class Contest {
 
     @Column
     private Integer primarySchoolQuota;
+    private String text;
     private LocalDate startDate;
     private LocalDate endDate;
 

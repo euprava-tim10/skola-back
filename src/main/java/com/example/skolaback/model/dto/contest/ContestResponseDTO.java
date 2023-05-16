@@ -20,6 +20,7 @@ public class ContestResponseDTO {
     private SchoolResponseDTO school;
     private Set<CourseQuotaResponseDTO> quotas;
     private Integer primarySchoolQuota;
+    private String text;
     private LocalDate startDate;
     private LocalDate endDate;
 }

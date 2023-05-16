@@ -40,8 +40,6 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public ContestResponseDTO createContest(long schoolId, Contest contest) {
         School school = schoolService.getById(schoolId);
-
-        contest.setStartDate(LocalDate.now());
         contest.setSchool(school);
 
         if (school.getType().equals(SchoolType.SREDNJA) && !contest.getQuotas().isEmpty()) {
