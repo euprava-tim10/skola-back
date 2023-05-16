@@ -8,16 +8,16 @@ INSERT INTO administrator(first_name, last_name, jmbg, school_id) VALUES ('Stefa
 INSERT INTO administrator(first_name, last_name, jmbg, school_id) VALUES ('Nikola', 'Nikolic', '9876543214321', 2);
 
 INSERT INTO student(first_name, last_name, jmbg, school_id, course) VALUES ('Petar', 'Petrovic', '123412341234', 1, null);
-INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (1, 4.50, '5');
-INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (1, 4.50, '6');
-INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (1, 4.50, '7');
-INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (1, 4.50, '8');
+INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (1, 4.50, 5);
+INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (1, 4.50, 6);
+INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (1, 4.50, 7);
+INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (1, 4.50, 8);
 
 INSERT INTO diploma(course, date, school_id, student_id) VALUES (null, '2022-07-01', 1, 1);
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, '5');
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, '6');
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, '7');
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, '8');
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 5);
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 6);
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 7);
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 8);
 
 
 SELECT * FROM contest;

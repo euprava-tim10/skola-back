@@ -33,7 +33,7 @@ public class Student {
             joinColumns = {@JoinColumn(name = "student_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "grade_year")
     @Column(name = "gpa")
-    private Map<String, Double> gpa;
+    private Map<Integer, Double> gpa;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
     private Set<ContestApplication> applications = new HashSet<>();

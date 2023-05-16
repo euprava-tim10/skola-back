@@ -9,24 +9,25 @@ import org.springframework.stereotype.Component;
 public class JwtTokenUtil {
 
     private final String jwtSecret = "zdtlD3JK56m6wTTgsNFhqzjqP";
-    private final String jwtIssuer = "borisavz.com";
-
-    //private final Logger logger;
 
     public AuthUser getAuthUser(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(jwtSecret)
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(jwtSecret)
+                    .parseClaimsJws(token)
+                    .getBody();
 
-        return AuthUser.builder()
+            return AuthUser.builder()
 //                .id(((Number) claims.get("id")).longValue())
-                .username((String) claims.get("username"))
-                .firstName((String) claims.get("firstName"))
-                .lastName((String) claims.get("lastName"))
-                .role((String) claims.get("role"))
-                .schoolId(((Number) claims.getOrDefault("schoolId", 0)).longValue())
-                .build();
+                    .username((String) claims.get("username"))
+                    .firstName((String) claims.get("firstName"))
+                    .lastName((String) claims.get("lastName"))
+                    .role((String) claims.get("role"))
+                    .schoolId(((Number) claims.getOrDefault("schoolId", 0)).longValue())
+                    .build();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public boolean validate(String token) {

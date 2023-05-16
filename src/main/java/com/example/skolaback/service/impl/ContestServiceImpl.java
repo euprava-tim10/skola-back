@@ -100,7 +100,7 @@ public class ContestServiceImpl implements ContestService {
                 return 0;
             }
 
-            if(!diplomaService.checkExistDiploma(student.getId(), SchoolType.OSNOVNA)) {
+            if(!diplomaService.checkExistDiploma(student.getJmbg(), SchoolType.OSNOVNA)) {
                 return 0;
             }
 

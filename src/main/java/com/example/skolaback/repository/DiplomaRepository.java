@@ -12,6 +12,6 @@ import java.util.Optional;
 @Repository
 public interface DiplomaRepository extends JpaRepository<Diploma, Long> {
 
-    @Query("SELECT d FROM Diploma d WHERE d.student.id = ?1 AND d.school.type = ?2")
-    Optional<Diploma> getDiploma(long studentId, SchoolType type);
+    @Query("SELECT d FROM Diploma d WHERE d.student.jmbg = ?1 AND d.school.type = ?2")
+    Optional<Diploma> getDiploma(String studentJmbg, SchoolType type);
 }

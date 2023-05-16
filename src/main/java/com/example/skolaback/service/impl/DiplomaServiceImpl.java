@@ -19,8 +19,14 @@ public class DiplomaServiceImpl implements DiplomaService {
     }
 
     @Override
-    public boolean checkExistDiploma(long studentId, SchoolType schoolType) {
-        Optional<Diploma> diploma = diplomaRepository.getDiploma(studentId, schoolType);
+    public boolean checkExistDiploma(String studentJmbg, SchoolType schoolType) {
+        Optional<Diploma> diploma = diplomaRepository.getDiploma(studentJmbg, schoolType);
         return diploma.isPresent();
+    }
+
+    @Override
+    public Diploma getDiploma(String studentJmbg, SchoolType schoolType) {
+        Optional<Diploma> diploma = diplomaRepository.getDiploma(studentJmbg, schoolType);
+        return diploma.orElse(null);
     }
 }

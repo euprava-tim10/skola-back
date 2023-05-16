@@ -29,27 +29,29 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         // Get authorization header and validate
         final String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (isEmpty(token)) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
+//        if (isEmpty(token)) {
+//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            return;
+//        }
 
-        if (!jwtTokenUtil.validate(token)) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
 
         // Get user identity and set it on the spring security context
         AuthUser authUser = jwtTokenUtil.getAuthUser(token);
-        UserDetails userDetails = new AuthUserDetails(authUser);
 
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails,
-                null,
-                userDetails.getAuthorities()
-        );
+        if(authUser != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = new AuthUserDetails(authUser);
+            if (!jwtTokenUtil.validate(token)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    userDetails.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
     }
 }

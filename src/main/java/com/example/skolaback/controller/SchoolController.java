@@ -6,6 +6,7 @@ import com.example.skolaback.model.dto.school.SchoolResponseDTO;
 import com.example.skolaback.model.entity.Contest;
 import com.example.skolaback.model.mapper.ExtendedModelMapper;
 import com.example.skolaback.security.permission.IsAdmin;
+import com.example.skolaback.security.permission.IsLoggedIn;
 import com.example.skolaback.service.ContestService;
 import com.example.skolaback.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class SchoolController {
     }
 
     @GetMapping("/{id}")
+    @IsLoggedIn
     public SchoolResponseDTO getSchool(@PathVariable long id) {
         return modelMapper.map(schoolService.getById(id), SchoolResponseDTO.class);
     }
@@ -39,11 +41,13 @@ public class SchoolController {
     }
 
     @GetMapping("/{id}/konkursi")
+    @IsLoggedIn
     public List<ContestResponseDTO> getSchoolContests(@PathVariable long id) {
         return modelMapper.mapAll(schoolService.getContestsBySchool(id), ContestResponseDTO.class);
     }
 
     @GetMapping("/{id}/smerovi")
+    @IsLoggedIn
     public List<CourseResponseDTO> getSchoolCourses(@PathVariable long id) {
         return modelMapper.mapAll(schoolService.getCoursesBySchool(id), CourseResponseDTO.class);
     }
