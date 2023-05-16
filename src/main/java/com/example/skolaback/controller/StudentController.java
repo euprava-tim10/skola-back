@@ -10,6 +10,8 @@ import com.example.skolaback.model.mapper.ExtendedModelMapper;
 import com.example.skolaback.security.permission.IsLoggedIn;
 import com.example.skolaback.service.DiplomaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +30,14 @@ public class StudentController {
     }
 
     @GetMapping("/{jmbg}/diploma/{tipSkole}")
-    public DiplomaResponseDTO getStudentDiploma(@PathVariable String jmbg,
-                                                @PathVariable SchoolType tipSkole) {
-        return DiplomaMapper.mapDiploma(diplomaService.getDiploma(jmbg, tipSkole));
+    public ResponseEntity<DiplomaResponseDTO> getStudentDiploma(@PathVariable String jmbg,
+                                                               @PathVariable SchoolType tipSkole) {
+        try {
+            return new ResponseEntity<>
+                    (DiplomaMapper.mapDiploma(diplomaService.getDiploma(jmbg, tipSkole)), HttpStatus.OK);
+        } catch (NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 }
