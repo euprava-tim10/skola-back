@@ -4,6 +4,7 @@ import com.example.skolaback.model.dto.course.CourseQuotaResponseDTO;
 import com.example.skolaback.model.dto.school.SchoolResponseDTO;
 import com.example.skolaback.model.entity.CourseQuota;
 import com.example.skolaback.model.entity.School;
+import com.example.skolaback.model.enumerations.ContestStatus;
 import lombok.*;
 
 import javax.persistence.FetchType;
@@ -23,4 +24,5 @@ public class ContestResponseDTO {
     private String text;
     private LocalDate startDate;
     private LocalDate endDate;
+    private ContestStatus contestStatus;
 }

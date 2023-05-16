@@ -1,10 +1,17 @@
 package com.example.skolaback.model.entity;
 
+import com.example.skolaback.model.enumerations.ApplicationStatus;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class ContestApplication {
 
@@ -26,4 +33,7 @@ public class ContestApplication {
 
     @ManyToOne
     private Course firstWish;
+
+    @Enumerated(EnumType.STRING)
+    private ApplicationStatus applicationStatus;
 }
