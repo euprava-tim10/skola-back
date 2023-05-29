@@ -2,6 +2,7 @@ package com.example.skolaback.service.impl;
 
 import com.example.skolaback.model.dto.application.CreateContestApplicationDTO;
 import com.example.skolaback.model.dto.contest.ContestResponseDTO;
+import com.example.skolaback.model.dto.user.UserResponseDTO;
 import com.example.skolaback.model.entity.*;
 import com.example.skolaback.model.enumerations.ApplicationStatus;
 import com.example.skolaback.model.enumerations.ContestStatus;
@@ -13,9 +14,12 @@ import com.example.skolaback.repository.CourseQuotaRepository;
 import com.example.skolaback.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static com.example.skolaback.security.AuthHelper.authUser;
 
@@ -78,7 +82,15 @@ public class ContestServiceImpl implements ContestService {
         contestApplication.setApplicationStatus(ApplicationStatus.NA_CEKANJU);
 
         if (contest.getSchool().getType() == SchoolType.OSNOVNA) {
-            //TODO check if authUser is real parent
+            RestTemplate restTemplate = new RestTemplate();
+
+            UserResponseDTO user = restTemplate.
+                    getForObject(String.format("http://localhost:9090/api/users/%s",
+                                    createContestApplicationDTO.getChildJmbg()), UserResponseDTO.class);
+
+            if (user == null || !Objects.equals(user.getFatherJmbg(), authUser().getUsername())) {
+                return 0;
+            }
             //TODO change role in sso-server to student
 
             if (checkIfApplicationExist(contest, createContestApplicationDTO.getChildJmbg())) {
