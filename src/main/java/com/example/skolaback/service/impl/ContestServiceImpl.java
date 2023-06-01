@@ -13,6 +13,7 @@ import com.example.skolaback.repository.ContestRepository;
 import com.example.skolaback.repository.CourseQuotaRepository;
 import com.example.skolaback.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,6 +27,8 @@ import static com.example.skolaback.security.AuthHelper.authUser;
 @Service
 public class ContestServiceImpl implements ContestService {
 
+//    @Value("${sso.url}")
+    private String ssoUrl;
     private final ExtendedModelMapper modelMapper;
     private final ContestRepository contestRepository;
     private final CourseQuotaRepository courseQuotaRepository;
@@ -85,7 +88,7 @@ public class ContestServiceImpl implements ContestService {
             RestTemplate restTemplate = new RestTemplate();
 
             UserResponseDTO user = restTemplate.
-                    getForObject(String.format("http://localhost:9090/api/users/%s",
+                    getForObject(String.format("%s/api/users/%s", ssoUrl,
                                     createContestApplicationDTO.getChildJmbg()), UserResponseDTO.class);
 
             if (user == null || !Objects.equals(user.getFatherJmbg(), authUser().getUsername())) {

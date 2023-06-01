@@ -1,5 +1,6 @@
 package com.example.skolaback.model.entity;
 
+import com.example.skolaback.model.enumerations.Profession;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,6 +23,8 @@ public class Diploma {
     private School school;
     @Column
     private String course;
+    @Enumerated(EnumType.STRING)
+    private Profession profession;
     @ElementCollection
     @CollectionTable(name = "diploma_gpa_mapping",
             joinColumns = {@JoinColumn(name = "diploma_id", referencedColumnName = "id")})

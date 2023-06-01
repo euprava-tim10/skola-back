@@ -12,6 +12,7 @@ public class DiplomaMapper {
                 .schoolName(diploma.getSchool().getName())
                 .schoolType(diploma.getSchool().getType().toString())
                 .course(diploma.getCourse())
+                .profession(diploma.getProfession().toString())
                 .gpa(diploma.getGpa())
                 .date(diploma.getDate())
                 .build();

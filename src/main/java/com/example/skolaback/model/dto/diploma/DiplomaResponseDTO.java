@@ -1,9 +1,7 @@
 package com.example.skolaback.model.dto.diploma;
 
-import com.example.skolaback.model.enumerations.SchoolType;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -20,6 +18,7 @@ public class DiplomaResponseDTO {
     private String schoolName;
     private String schoolType;
     private String course;
+    private String profession;
     private Map<Integer, Double> gpa;
     private LocalDate date;
 }
