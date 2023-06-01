@@ -7,15 +7,15 @@ SET school_id = NULL;
 DELETE FROM diploma_gpa_mapping;
 DELETE FROM student_gpa_mapping;
 
-DELETE FROM skola.administrator;
-DELETE FROM skola.contest;
-DELETE FROM skola.contest_application;
-DELETE FROM skola.contest_quotas;
-DELETE FROM skola.course;
-DELETE FROM skola.course_quota;
-DELETE FROM skola.diploma;
-DELETE FROM skola.school;
-DELETE FROM skola.student;
+DELETE FROM administrator;
+DELETE FROM contest;
+DELETE FROM contest_application;
+DELETE FROM contest_quotas;
+DELETE FROM course;
+DELETE FROM course_quota;
+DELETE FROM diploma;
+DELETE FROM school;
+DELETE FROM student;
 
 
 INSERT INTO school(id, name, place, type) VALUES (1, 'Vuk Karadzic', 'Loznica', 'OSNOVNA');
@@ -35,8 +35,14 @@ INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (1, 4.50, 7)
 INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (1, 4.50, 8);
 
 INSERT INTO diploma(id, course, profession, date, school_id, student_id) VALUES (1, null, 'OTHER', '2022-07-01', 1, 1);
+INSERT INTO diploma(id, course, profession, date, school_id, student_id) VALUES (2, 1, 'OTHER', '2022-07-01', 2, 1);
 
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 5);
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 6);
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 7);
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 8);
+
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 1);
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (2, 4.50, 2);
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (3, 4.50, 3);
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (4, 4.50, 4);
