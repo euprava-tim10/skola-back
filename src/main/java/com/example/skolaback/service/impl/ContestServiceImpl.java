@@ -27,7 +27,7 @@ import static com.example.skolaback.security.AuthHelper.authUser;
 @Service
 public class ContestServiceImpl implements ContestService {
 
-//    @Value("${sso.url}")
+    @Value("${sso.url}")
     private String ssoUrl;
     private final ExtendedModelMapper modelMapper;
     private final ContestRepository contestRepository;
@@ -91,9 +91,17 @@ public class ContestServiceImpl implements ContestService {
                     getForObject(String.format("%s/api/users/%s", ssoUrl,
                                     createContestApplicationDTO.getChildJmbg()), UserResponseDTO.class);
 
-            if (user == null || !Objects.equals(user.getFatherJmbg(), authUser().getUsername())) {
+            if(user == null) {
                 return 0;
             }
+            boolean parent =
+                    (user.getFatherJmbg() != null && Objects.equals(user.getFatherJmbg(), authUser().getUsername()))
+                    || (user.getMotherJmbg() != null && Objects.equals(user.getMotherJmbg(), authUser().getUsername()));
+
+            if (!parent) {
+                return 0;
+            }
+
             //TODO change role in sso-server to student
 
             if (checkIfApplicationExist(contest, createContestApplicationDTO.getChildJmbg())) {

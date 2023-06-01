@@ -29,21 +29,14 @@ INSERT INTO administrator(id, first_name, last_name, jmbg, school_id) VALUES (2,
 
 INSERT INTO student(id, first_name, last_name, jmbg, school_id, course) VALUES (1, 'Petar', 'Petrovic', '123412341234', 1, null);
 INSERT INTO student(id, first_name, last_name, jmbg, school_id, course) VALUES (2, 'Petar', 'Petrovic', '123412341234', 2, 1);
-INSERT INTO student(id, first_name, last_name, jmbg, school_id, course) VALUES (3, 'Nemanja', 'Murgaski', '123412341233', 1, null);
 
 INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (2, 4.50, 1);
 INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (2, 4.50, 2);
 INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (2, 4.50, 3);
 INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (2, 4.50, 4);
 
-INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (3, 4.20, 5);
-INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (3, 4.30, 6);
-INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (3, 4.40, 7);
-INSERT INTO student_gpa_mapping(student_id, gpa, grade_year) VALUES (3, 4.50, 8);
-
 INSERT INTO diploma(id, course, profession, date, school_id, student_id) VALUES (1, null, 'OTHER', '2022-07-01', 1, 1);
 INSERT INTO diploma(id, course, profession, date, school_id, student_id) VALUES (2, 1, 'OTHER', '2022-07-01', 2, 1);
-INSERT INTO diploma(id, course, profession, date, school_id, student_id) VALUES (3, null, 'OTHER', '2022-07-15', 1, 3);
 
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 5);
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 6);
@@ -54,8 +47,3 @@ INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (2, 4.50, 1)
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (2, 4.50, 2);
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (2, 4.50, 3);
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (2, 4.50, 4);
-
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (3, 4.20, 5);
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (3, 4.30, 6);
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (3, 4.40, 7);
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (3, 4.50, 8);
