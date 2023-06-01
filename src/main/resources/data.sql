@@ -42,7 +42,7 @@ INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 6)
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 7);
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 8);
 
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (1, 4.50, 1);
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (2, 4.50, 1);
 INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (2, 4.50, 2);
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (3, 4.50, 3);
-INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (4, 4.50, 4);
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (2, 4.50, 3);
+INSERT INTO diploma_gpa_mapping(diploma_id, gpa, grade_year) VALUES (2, 4.50, 4);
