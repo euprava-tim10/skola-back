@@ -27,7 +27,8 @@ import static com.example.skolaback.security.AuthHelper.authUser;
 @Service
 public class ContestServiceImpl implements ContestService {
 
-    @Value("${sso.url}")
+//    @Value("${sso.url}")
+    @Value("http://localhost:9090")
     private String ssoUrl;
     private final ExtendedModelMapper modelMapper;
     private final ContestRepository contestRepository;
@@ -146,5 +147,15 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public List<Contest> getContestByStatus(ContestStatus contestStatus) {
         return contestRepository.getContestByStatus(contestStatus);
+    }
+
+    @Override
+    public List<ContestApplication> getContestApplicationByCourse(long contestId, long courseId) {
+        return contestApplicationRepository.getContestApplicationsByCourse(contestId, courseId);
+    }
+
+    @Override
+    public List<ContestApplication> getContestApplication(long contestId) {
+        return contestApplicationRepository.getContestApplications(contestId);
     }
 }

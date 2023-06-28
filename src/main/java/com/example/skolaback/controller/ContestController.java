@@ -44,4 +44,21 @@ public class ContestController {
                                                 @RequestBody CreateContestApplicationDTO contestApplication) {
         return contestService.createApplication(id, contestApplication);
     }
+
+    @GetMapping("/{id}/smerovi/{smerId}/prijave")
+    @IsLoggedIn
+    public List<ContestApplication> getContestApplicationByCourse(
+            @PathVariable long id,
+            @PathVariable long smerId
+    ) {
+        return contestService.getContestApplicationByCourse(id, smerId);
+    }
+
+    @GetMapping("/{id}/prijave")
+    @IsLoggedIn
+    public List<ContestApplication> getContestApplication(
+            @PathVariable long id
+    ) {
+        return contestService.getContestApplication(id);
+    }
 }

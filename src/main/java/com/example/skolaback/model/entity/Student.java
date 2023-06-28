@@ -34,7 +34,4 @@ public class Student {
     @MapKeyColumn(name = "grade_year")
     @Column(name = "gpa")
     private Map<Integer, Double> gpa;
-
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
-    private Set<ContestApplication> applications = new HashSet<>();
 }

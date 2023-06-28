@@ -16,4 +16,6 @@ public interface ContestService {
     boolean checkIfApplicationExist(Contest contest, String studentJmbg);
 
     List<Contest> getContestByStatus(ContestStatus contestStatus);
+    List<ContestApplication> getContestApplicationByCourse(long contestId, long courseId);
+    List<ContestApplication> getContestApplication(long contestId);
 }
