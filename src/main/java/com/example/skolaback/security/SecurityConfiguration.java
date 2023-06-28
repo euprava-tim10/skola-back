@@ -35,6 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/skole/{id}/konkursi").access("@webSecurity.checkSchoolAdmin(#id)")
                 .antMatchers(HttpMethod.GET, "/api/ucenici/{jmbg}/diploma/{tipSkole}").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/konkursi/{id}/zatvori").access("@webSecurity.checkContestAdmin(#id)")
                 .anyRequest().permitAll();
 
         httpSecurity.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

@@ -22,9 +22,28 @@ public interface ContestApplicationRepository extends JpaRepository<ContestAppli
     @Query(value = "SELECT a.* FROM contest_application a " +
             "WHERE a.contest_id = ?1 " +
             "AND a.first_wish_id = ?2 " +
-            "ORDER BY a.rang_oints DESC " +
+            "ORDER BY a.rang_points DESC " +
             "LIMIT ?3", nativeQuery = true)
     List<ContestApplication> getTopNContestApplicationsByCourse(long contestId, long courseId, long n);
+
+    @Query(value = "SELECT a.* FROM contest_application a " +
+            "WHERE a.contest_id = ?1 " +
+            "ORDER BY a.rang_points DESC " +
+            "LIMIT ?2", nativeQuery = true)
+    List<ContestApplication> getTopNContestApplications(long contestId, long n);
+
+    @Query(value = "SELECT a FROM ContestApplication a " +
+            "WHERE a.contest.id = ?1 " +
+            "AND a.applicationStatus = 'NA_CEKANJU'" +
+            "ORDER BY a.rangPoints DESC")
+    List<ContestApplication> getOnHoldContestApplications(long contestId);
+
+    @Query(value = "SELECT a.* FROM contest_application a " +
+            "WHERE a.contest_id = ?1 " +
+            "AND a.first_wish_id = ?2 " +
+            "AND a.application_status = 'NA_CEKANJU'" +
+            "ORDER BY a.rang_points DESC ", nativeQuery = true)
+    List<ContestApplication> getOnHoldContestApplicationsByCourse(long contestId, long courseId);
 
     @Query(value = "SELECT a FROM ContestApplication a " +
             "WHERE a.contest.id = ?1 " +

@@ -61,4 +61,12 @@ public class ContestController {
     ) {
         return contestService.getContestApplication(id);
     }
+
+    @PutMapping("/{id}/zatvori")
+    @IsAdmin
+    public void closeContest(
+            @PathVariable long id
+    ) {
+        contestService.closeContest(id);
+    }
 }

@@ -18,4 +18,5 @@ public interface ContestService {
     List<Contest> getContestByStatus(ContestStatus contestStatus);
     List<ContestApplication> getContestApplicationByCourse(long contestId, long courseId);
     List<ContestApplication> getContestApplication(long contestId);
+    void closeContest(long contestId);
 }

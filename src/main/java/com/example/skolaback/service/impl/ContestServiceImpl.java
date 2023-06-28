@@ -11,6 +11,7 @@ import com.example.skolaback.model.mapper.ExtendedModelMapper;
 import com.example.skolaback.repository.ContestApplicationRepository;
 import com.example.skolaback.repository.ContestRepository;
 import com.example.skolaback.repository.CourseQuotaRepository;
+import com.example.skolaback.repository.NotificationRepository;
 import com.example.skolaback.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -38,8 +40,9 @@ public class ContestServiceImpl implements ContestService {
     private final StudentService studentService;
     private final DiplomaService diplomaService;
     private final CourseService courseService;
+    private final NotificationRepository notificationRepository;
 
-    public ContestServiceImpl(SchoolService schoolService, CourseQuotaRepository courseQuotaRepository, ContestRepository contestRepository, ExtendedModelMapper modelMapper, StudentService studentService, DiplomaService diplomaService, ContestApplicationRepository contestApplicationRepository, CourseService courseService) {
+    public ContestServiceImpl(SchoolService schoolService, CourseQuotaRepository courseQuotaRepository, ContestRepository contestRepository, ExtendedModelMapper modelMapper, StudentService studentService, DiplomaService diplomaService, ContestApplicationRepository contestApplicationRepository, CourseService courseService, NotificationRepository notificationRepository) {
         this.schoolService = schoolService;
         this.courseQuotaRepository = courseQuotaRepository;
         this.contestRepository = contestRepository;
@@ -48,6 +51,7 @@ public class ContestServiceImpl implements ContestService {
         this.diplomaService = diplomaService;
         this.contestApplicationRepository = contestApplicationRepository;
         this.courseService = courseService;
+        this.notificationRepository = notificationRepository;
     }
 
 
@@ -157,5 +161,84 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public List<ContestApplication> getContestApplication(long contestId) {
         return contestApplicationRepository.getContestApplications(contestId);
+    }
+
+    @Override
+    public void closeContest(long contestId) {
+        Contest contest = contestRepository.getById(contestId);
+        contest.setContestStatus(ContestStatus.ZATVOREN);
+
+        contestRepository.save(contest);
+
+        if (contest.getSchool().getType() == SchoolType.OSNOVNA) {
+            List<ContestApplication> contestApplications =
+                    contestApplicationRepository.getTopNContestApplications(contestId, contest.getPrimarySchoolQuota());
+
+            for (ContestApplication application : contestApplications) {
+                application.setApplicationStatus(ApplicationStatus.PRIMLJEN);
+                contestApplicationRepository.save(application);
+
+                Notification notification = Notification.builder()
+                        .student(application.getStudent())
+                        .date(new Date())
+                        .text("Cestitamo upisali ste osnovnu skolu, pogledajte rezultate!")
+                        .link("")
+                        .build();
+                notificationRepository.save(notification);
+            }
+
+            List<ContestApplication> rejectedApplications =
+                    contestApplicationRepository.getOnHoldContestApplications(contestId);
+
+            for (ContestApplication application : rejectedApplications) {
+                application.setApplicationStatus(ApplicationStatus.ODBIJEN);
+                contestApplicationRepository.save(application);
+
+                Notification notification = Notification.builder()
+                        .student(application.getStudent())
+                        .date(new Date())
+                        .text("Nazalost niste upisali osnovnu skolu, pogledajte rezultate!")
+                        .link("")
+                        .build();
+                notificationRepository.save(notification);
+            }
+        }
+        if (contest.getSchool().getType() == SchoolType.SREDNJA) {
+            for (CourseQuota courseQuota : contest.getQuotas()) {
+                List<ContestApplication> contestApplications =
+                        contestApplicationRepository.
+                                getTopNContestApplicationsByCourse
+                                        (contestId, courseQuota.getCourse().getId(), courseQuota.getQuota());
+                for (ContestApplication application : contestApplications) {
+                    application.setApplicationStatus(ApplicationStatus.PRIMLJEN);
+                    contestApplicationRepository.save(application);
+
+                    Notification notification = Notification.builder()
+                            .student(application.getStudent())
+                            .date(new Date())
+                            .text("Cestitamo upisali ste srednju skolu, pogledajte rezultate!")
+                            .link("")
+                            .build();
+                    notificationRepository.save(notification);
+                }
+
+                List<ContestApplication> rejectedApplications =
+                        contestApplicationRepository.
+                                getOnHoldContestApplicationsByCourse(contestId, courseQuota.getCourse().getId());
+
+                for (ContestApplication application : rejectedApplications) {
+                    application.setApplicationStatus(ApplicationStatus.ODBIJEN);
+                    contestApplicationRepository.save(application);
+
+                    Notification notification = Notification.builder()
+                            .student(application.getStudent())
+                            .date(new Date())
+                            .text("Nazalost niste upisali osnovnu skolu, pogledajte rezultate!")
+                            .link("")
+                            .build();
+                    notificationRepository.save(notification);
+                }
+            }
+        }
     }
 }
