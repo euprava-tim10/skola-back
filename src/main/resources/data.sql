@@ -16,7 +16,8 @@
 #DELETE FROM diploma;
 #DELETE FROM school;
 #DELETE FROM student;
-
+#DELETE FROM notification;
+select * from notification;
 INSERT INTO school(id, name, place, type) VALUES (1, 'Vuk Karadzic', 'Loznica', 'OSNOVNA');
 INSERT INTO school(id, name, place, type) VALUES (2, 'Nikola Tesla', 'Novi Sad', 'SREDNJA');
 
