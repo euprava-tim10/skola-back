@@ -4,6 +4,7 @@ import com.example.skolaback.model.dto.contest.ContestResponseDTO;
 import com.example.skolaback.model.dto.course.CourseResponseDTO;
 import com.example.skolaback.model.dto.school.SchoolResponseDTO;
 import com.example.skolaback.model.entity.Contest;
+import com.example.skolaback.model.entity.Student;
 import com.example.skolaback.model.mapper.ExtendedModelMapper;
 import com.example.skolaback.security.permission.IsAdmin;
 import com.example.skolaback.security.permission.IsLoggedIn;
@@ -50,5 +51,11 @@ public class SchoolController {
     @IsLoggedIn
     public List<CourseResponseDTO> getSchoolCourses(@PathVariable long id) {
         return modelMapper.mapAll(schoolService.getCoursesBySchool(id), CourseResponseDTO.class);
+    }
+
+    @GetMapping("/{id}/studenti")
+    @IsAdmin
+    public List<Student> getSchoolStudents(@PathVariable long id) {
+        return schoolService.getStudents(id);
     }
 }

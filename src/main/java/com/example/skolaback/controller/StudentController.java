@@ -3,6 +3,7 @@ package com.example.skolaback.controller;
 import com.example.skolaback.model.dto.contest.ContestResponseDTO;
 import com.example.skolaback.model.dto.diploma.DiplomaResponseDTO;
 import com.example.skolaback.model.entity.Diploma;
+import com.example.skolaback.model.entity.Student;
 import com.example.skolaback.model.enumerations.ContestStatus;
 import com.example.skolaback.model.enumerations.SchoolType;
 import com.example.skolaback.model.mapper.DiplomaMapper;
@@ -38,6 +39,5 @@ public class StudentController {
         } catch (NullPointerException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 }
