@@ -2,6 +2,7 @@ package com.example.skolaback.service.impl;
 
 import com.example.skolaback.model.dto.application.CreateContestApplicationDTO;
 import com.example.skolaback.model.dto.contest.ContestResponseDTO;
+import com.example.skolaback.model.dto.student.ChangeStudentRoleDTO;
 import com.example.skolaback.model.dto.user.UserResponseDTO;
 import com.example.skolaback.model.entity.*;
 import com.example.skolaback.model.enumerations.ApplicationStatus;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static com.example.skolaback.security.AuthHelper.authUser;
 
@@ -107,8 +105,6 @@ public class ContestServiceImpl implements ContestService {
                 return 0;
             }
 
-            //TODO change role in sso-server to student
-
             if (checkIfApplicationExist(contest, createContestApplicationDTO.getChildJmbg())) {
                 return 0;
             }
@@ -175,14 +171,33 @@ public class ContestServiceImpl implements ContestService {
                     contestApplicationRepository.getTopNContestApplications(contestId, contest.getPrimarySchoolQuota());
 
             for (ContestApplication application : contestApplications) {
+                Student student = application.getStudent();
+                if (student.getSchool() != null) {
+                    Notification notification = Notification.builder()
+                            .student(application.getStudent())
+                            .date(new Date())
+                            .text("Vec imate skolu, ne mozete opet biti upisani u osnovnu!")
+                            .link("/contests/"
+                                    + contest.getId() + "/courses/" +
+                                    application.getFirstWish().getId() + "/ranking")
+                            .build();
+                    notificationRepository.save(notification);
+                    continue;
+                }
                 application.setApplicationStatus(ApplicationStatus.PRIMLJEN);
                 contestApplicationRepository.save(application);
+
+
+                student.setSchool(contest.getSchool());
+                studentService.save(student);
 
                 Notification notification = Notification.builder()
                         .student(application.getStudent())
                         .date(new Date())
                         .text("Cestitamo upisali ste osnovnu skolu, pogledajte rezultate!")
-                        .link("")
+                        .link("/contests/"
+                                + contest.getId() + "/courses/" +
+                                application.getFirstWish().getId() + "/ranking")
                         .build();
                 notificationRepository.save(notification);
             }
@@ -198,7 +213,9 @@ public class ContestServiceImpl implements ContestService {
                         .student(application.getStudent())
                         .date(new Date())
                         .text("Nazalost niste upisali osnovnu skolu, pogledajte rezultate!")
-                        .link("")
+                        .link("/contests/"
+                                + contest.getId() + "/courses/" +
+                                application.getFirstWish().getId() + "/ranking")
                         .build();
                 notificationRepository.save(notification);
             }
@@ -210,14 +227,34 @@ public class ContestServiceImpl implements ContestService {
                                 getTopNContestApplicationsByCourse
                                         (contestId, courseQuota.getCourse().getId(), courseQuota.getQuota());
                 for (ContestApplication application : contestApplications) {
+                    Student student = application.getStudent();
+                    if (student.getSchool().getType() == SchoolType.SREDNJA) {
+                        Notification notification = Notification.builder()
+                                .student(application.getStudent())
+                                .date(new Date())
+                                .text("Vec imate srednju skolu, ne mozete opet upisati!")
+                                .link("/contests/"
+                                        + contest.getId() + "/courses/" +
+                                        application.getFirstWish().getId() + "/ranking")
+                                .build();
+                        notificationRepository.save(notification);
+                        continue;
+                    }
+
                     application.setApplicationStatus(ApplicationStatus.PRIMLJEN);
                     contestApplicationRepository.save(application);
+
+                    student.setSchool(contest.getSchool());
+                    student.setCourse(application.getFirstWish().getName());
+                    studentService.save(student);
 
                     Notification notification = Notification.builder()
                             .student(application.getStudent())
                             .date(new Date())
                             .text("Cestitamo upisali ste srednju skolu, pogledajte rezultate!")
-                            .link("")
+                            .link("/contests/"
+                                    + contest.getId() + "/courses/" +
+                                    application.getFirstWish().getId() + "/ranking")
                             .build();
                     notificationRepository.save(notification);
                 }
@@ -234,11 +271,25 @@ public class ContestServiceImpl implements ContestService {
                             .student(application.getStudent())
                             .date(new Date())
                             .text("Nazalost niste upisali osnovnu skolu, pogledajte rezultate!")
-                            .link("")
+                            .link("/contests/"
+                                    + contest.getId() + "/courses/" +
+                                    application.getFirstWish().getId() + "/ranking")
                             .build();
                     notificationRepository.save(notification);
                 }
             }
         }
+    }
+
+    public void changeRoleInSSO(Student student, School school) {
+        ChangeStudentRoleDTO serviceRole = new ChangeStudentRoleDTO();
+        serviceRole.setRole("ROLE_STUDENT");
+        serviceRole.setService("school");
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put("schoolId", school.getId());
+        serviceRole.setAttributes(attributes);
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.put(String.format("%s/api/users/%s/serviceRoles", ssoUrl, student.getJmbg()), serviceRole);
     }
 }

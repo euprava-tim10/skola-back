@@ -7,6 +7,7 @@ import com.example.skolaback.model.entity.Student;
 public interface StudentService {
 
     Student getById(long id);
+    Student save(Student student);
     Student getByJMBG(String jmbg);
     Student createStudent(CreateContestApplicationDTO createContestApplicationDTO, School school);
     Double calculateRangPoints(long studentId);
