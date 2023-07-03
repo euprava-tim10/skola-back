@@ -27,8 +27,7 @@ import static com.example.skolaback.security.AuthHelper.authUser;
 @Service
 public class ContestServiceImpl implements ContestService {
 
-//    @Value("${sso.url}")
-    @Value("http://localhost:9090")
+    @Value("${sso.url}")
     private String ssoUrl;
     private final ExtendedModelMapper modelMapper;
     private final ContestRepository contestRepository;
