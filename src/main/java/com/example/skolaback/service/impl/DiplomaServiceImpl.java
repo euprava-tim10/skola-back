@@ -56,7 +56,8 @@ public class DiplomaServiceImpl implements DiplomaService {
         if (student.getSchool().getType() == SchoolType.SREDNJA) {
             diploma.setCourse(student.getCourse());
         }
-
+        student.setGpa(diplomaCreateDTO.getGpa());
+        studentService.save(student);
         diplomaRepository.save(diploma);
     }
 }

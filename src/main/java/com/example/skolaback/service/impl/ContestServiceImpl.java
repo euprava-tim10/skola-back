@@ -195,8 +195,7 @@ public class ContestServiceImpl implements ContestService {
                         .date(new Date())
                         .text("Cestitamo upisali ste osnovnu skolu, pogledajte rezultate!")
                         .link("/contests/"
-                                + contest.getId() + "/courses/" +
-                                application.getFirstWish().getId() + "/ranking")
+                                + contest.getId() + "/courses/0/ranking")
                         .build();
                 notificationRepository.save(notification);
             }
@@ -213,8 +212,7 @@ public class ContestServiceImpl implements ContestService {
                         .date(new Date())
                         .text("Nazalost niste upisali osnovnu skolu, pogledajte rezultate!")
                         .link("/contests/"
-                                + contest.getId() + "/courses/" +
-                                application.getFirstWish().getId() + "/ranking")
+                                + contest.getId() + "/courses/0/ranking")
                         .build();
                 notificationRepository.save(notification);
             }
@@ -269,7 +267,7 @@ public class ContestServiceImpl implements ContestService {
                     Notification notification = Notification.builder()
                             .student(application.getStudent())
                             .date(new Date())
-                            .text("Nazalost niste upisali osnovnu skolu, pogledajte rezultate!")
+                            .text("Nazalost niste upisali srednju skolu, pogledajte rezultate!")
                             .link("/contests/"
                                     + contest.getId() + "/courses/" +
                                     application.getFirstWish().getId() + "/ranking")
